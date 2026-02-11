@@ -11,16 +11,18 @@ const MAX_CONVERSATIONS = 20;
 // Custom storage that handles quota errors
 const customStorage = {
   getItem: (name: string): string | null => {
+    if (typeof window === 'undefined') return null;
     try {
-      return localStorage.getItem(name);
+      return window.localStorage.getItem(name);
     } catch {
       console.warn('Failed to read from localStorage');
       return null;
     }
   },
   setItem: (name: string, value: string): void => {
+    if (typeof window === 'undefined') return;
     try {
-      localStorage.setItem(name, value);
+      window.localStorage.setItem(name, value);
     } catch (error) {
       console.warn('localStorage quota exceeded, trimming conversations...');
       try {
@@ -33,17 +35,22 @@ const customStorage = {
               ...conv,
               messages: conv.messages.slice(-MAX_MESSAGES_PER_CONVERSATION),
             }));
-          localStorage.setItem(name, JSON.stringify(parsed));
+          if (typeof window !== 'undefined') {
+            window.localStorage.setItem(name, JSON.stringify(parsed));
+          }
         }
       } catch {
         console.warn('Clearing conversations due to quota issues');
-        localStorage.removeItem(name);
+        if (typeof window !== 'undefined') {
+          window.localStorage.removeItem(name);
+        }
       }
     }
   },
   removeItem: (name: string): void => {
+    if (typeof window === 'undefined') return;
     try {
-      localStorage.removeItem(name);
+      window.localStorage.removeItem(name);
     } catch {
       console.warn('Failed to remove from localStorage');
     }

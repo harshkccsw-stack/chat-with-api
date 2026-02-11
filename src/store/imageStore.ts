@@ -20,16 +20,18 @@ interface ImageState {
 // Custom storage that handles quota errors
 const customStorage = {
   getItem: (name: string): string | null => {
+    if (typeof window === 'undefined') return null;
     try {
-      return localStorage.getItem(name);
+      return window.localStorage.getItem(name);
     } catch {
       console.warn('Failed to read from localStorage');
       return null;
     }
   },
   setItem: (name: string, value: string): void => {
+    if (typeof window === 'undefined') return;
     try {
-      localStorage.setItem(name, value);
+      window.localStorage.setItem(name, value);
     } catch (error) {
       // Quota exceeded - try to clear old data and retry
       console.warn('localStorage quota exceeded, clearing old images...');
@@ -45,18 +47,23 @@ const customStorage = {
             ...favoriteImages.slice(0, 10),
             ...nonFavorites.slice(0, Math.max(0, 10 - favoriteImages.length))
           ];
-          localStorage.setItem(name, JSON.stringify(parsed));
+          if (typeof window !== 'undefined') {
+            window.localStorage.setItem(name, JSON.stringify(parsed));
+          }
         }
       } catch {
         // If all else fails, clear the storage
         console.warn('Clearing image history due to quota issues');
-        localStorage.removeItem(name);
+        if (typeof window !== 'undefined') {
+          window.localStorage.removeItem(name);
+        }
       }
     }
   },
   removeItem: (name: string): void => {
+    if (typeof window === 'undefined') return;
     try {
-      localStorage.removeItem(name);
+      window.localStorage.removeItem(name);
     } catch {
       console.warn('Failed to remove from localStorage');
     }

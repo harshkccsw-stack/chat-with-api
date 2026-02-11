@@ -1,5 +1,5 @@
 import { STORAGE_KEYS } from '@/lib/constants';
-import { getItem, setItem } from '@/lib/storage';
+import { getItem, removeItem, setItem } from '@/lib/storage';
 import { validateApiKey as validateKey } from '@/lib/utils';
 import { useCallback, useState } from 'react';
 
@@ -19,7 +19,7 @@ export function useApiKey() {
     if (key) {
       setItem(STORAGE_KEYS.API_KEY, key);
     } else {
-      localStorage.removeItem(STORAGE_KEYS.API_KEY);
+      removeItem(STORAGE_KEYS.API_KEY);
     }
     setIsValid(null);
   }, []);
