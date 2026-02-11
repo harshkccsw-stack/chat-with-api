@@ -22,7 +22,7 @@ export default function Home() {
       const id = createConversation();
       setCurrentConversation(id);
     }
-  }, []);
+  }, [conversations.length, createConversation, setCurrentConversation]);
 
   if (!hasApiKey) {
     return (

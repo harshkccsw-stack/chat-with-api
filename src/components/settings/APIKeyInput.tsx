@@ -258,7 +258,7 @@ function VertexAIConfig() {
           <span className="text-purple-500">🖼️</span> Vertex AI (Imagen 3)
         </h3>
         <p className="text-sm text-muted-foreground mb-4">
-          Use Google's Imagen 3 models through Vertex AI for high-quality image generation.
+          Use Google&apos;s Imagen 3 models through Vertex AI for high-quality image generation.
           Uses Service Account authentication - no token refresh needed!
         </p>
       </div>
@@ -343,7 +343,7 @@ function VertexAIConfig() {
         <ol className="list-decimal list-inside space-y-1 text-muted-foreground text-xs">
           <li>Go to <a href="https://console.cloud.google.com/iam-admin/serviceaccounts" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">GCP Service Accounts</a></li>
           <li>Create a service account or select existing one</li>
-          <li>Grant it the <strong>"Vertex AI User"</strong> role</li>
+          <li>Grant it the <strong>&quot;Vertex AI User&quot;</strong> role</li>
           <li>Go to Keys → Add Key → Create new key → JSON</li>
           <li>Upload the downloaded JSON file above</li>
         </ol>
